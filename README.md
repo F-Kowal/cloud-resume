@@ -1,0 +1,1 @@
+# My Azure Cloud Resume
