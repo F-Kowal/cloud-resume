@@ -11,11 +11,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v2
+      - uses: azure/setup-azure-cli@v1      
 
-      - name: Upload Static Website to Azure Storage
+      - name: Upload Website Files to Azure Storage
         run: |
-          az storage blob upload-batch -d '$web' -s ./frontend/build \
-            --account-name cloudresumeacgstorage \
-            --account-key ${{ secrets.AZURE_STORAGE_ACCOUNT_KEY }}
+          az storage blob upload-batch -d '$web' -s ./build --account-name cloudresumeacgstorage --account-key ${{ secrets.AZURE_STORAGE_ACCOUNT_KEY }}
