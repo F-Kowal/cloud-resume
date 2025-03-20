@@ -1,0 +1,21 @@
+
+name: deploy_frontend
+
+on:
+  push:
+    branches: [ master ]
+    paths:
+      - 'frontend/**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Upload Static Website to Azure Storage
+        run: |
+          az storage blob upload-batch -d '$web' -s ./frontend/build \
+            --account-name cloudresumeacgstorage \
+            --account-key ${{ secrets.AZURE_STORAGE_ACCOUNT_KEY }}
